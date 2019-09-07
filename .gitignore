@@ -1,0 +1,6 @@
+bin/math
+dotfiles/bash_local
+dotfiles/git/gitconfig-local
+dotfiles/path
+dotfiles/shell_local
+Mathematica/Kernel/path.m

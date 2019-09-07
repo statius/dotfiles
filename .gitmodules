@@ -1,0 +1,3 @@
+[submodule "Mathematica/Applications/CustomTicks"]
+	path = Mathematica/Applications/CustomTicks
+	url = https://github.com/mark-caprio/CustomTicks.git

@@ -1,0 +1,31 @@
+# bash profile
+
+# load ~/.paths to extend `$PATH`
+# ~/.path is not committed
+[ -r ~/.path ] && [ -f ~/.path ] && source ~/.path
+
+
+# load bash dotfiles
+for file in ~/.bash/{prompt.bash,exports.bash,options.bash,completions.bash}; do
+
+  [ -r "$file" ] && [ -f "$file" ] && source "$file"
+
+done
+
+unset file
+
+# ~/.bash_local can be used for bash settings you don’t want to commit
+[ -r "$file" ] && [ -f "$file" ] && source ~/.bash_local
+
+
+# load general shell dotfiles
+for file in ~/.shell/{exports.sh,aliases.sh,functions/*.sh,completions.sh,sources.sh}; do
+
+  [ -r "$file" ] && [ -f "$file" ] && source "$file"
+
+done
+
+unset file
+
+# ~/.shell_local can be used for general shell settings you don’t want to commit
+[ -r "$file" ] && [ -f "$file" ] && source ~/.shell_local

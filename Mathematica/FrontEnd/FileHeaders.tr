@@ -1,0 +1,6 @@
+(* set blank FrontEndResourceString["PackageHeader"] *)
+(* see Mathematica Stack Exchange question https://mathematica.stackexchange.com/questions/121059 *)
+
+@@resource PackageHeader
+
+@|

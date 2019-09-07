@@ -1,0 +1,4 @@
+# bashrc
+
+# load `~/.bash_profile` if PS1 is set
+[ -n "$PS1" ] && source ~/.bash_profile
