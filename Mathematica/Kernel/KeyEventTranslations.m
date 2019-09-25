@@ -34,36 +34,49 @@ Module[
   (* splice double braket notation in to system KeyEventTranslation string *)
   keyEventString = StringReplace[
     keyEventString,
-    "EventTranslations[{" -> "EventTranslations[{
+    "EventTranslations[{
+
+(* Evaluation *)" -> "EventTranslations[{
 
 (* Double bracket notation *)
 \tItem[KeyEvent[\"[\", Modifiers -> {Control}],
 \t\tFrontEndExecute[{
-\t\t\tFrontEnd`NotebookWrite[FrontEnd`InputNotebook[], \"\[LeftDoubleBracket]\", After]
+\t\t\tFrontEnd`NotebookWrite[FrontEnd`InputNotebook[], leftDoubleBracket, After]
 \t\t}]],
 \tItem[KeyEvent[\"]\", Modifiers -> {Control}],
 \t\tFrontEndExecute[{
-\t\t\tFrontEnd`NotebookWrite[FrontEnd`InputNotebook[], \"\[RightDoubleBracket]\", After]
+\t\t\tFrontEnd`NotebookWrite[FrontEnd`InputNotebook[], rightDoubleBracket, After]
 \t\t}]], 
 \tItem[KeyEvent[\"]\", Modifiers -> {Control, Command}],
 \t\tFrontEndExecute[{
-\t\t\tFrontEnd`NotebookWrite[FrontEnd`InputNotebook[], \"\[LeftDoubleBracket]\", After],
-\t\t\tFrontEnd`NotebookWrite[FrontEnd`InputNotebook[], \"\[RightDoubleBracket]\", Before]
-\t\t}]],"
-  ]
+\t\t\tFrontEnd`NotebookWrite[FrontEnd`InputNotebook[], leftDoubleBracket, After],
+\t\t\tFrontEnd`NotebookWrite[FrontEnd`InputNotebook[], rightDoubleBracket, Before]
+\t\t}]],
+
+(* Evaluation *)"
+  ];
+
+  keyEventString = StringReplace[
+    keyEventString, 
+    {
+     "leftDoubleBracket" -> ToString[FullForm @ "\[LeftDoubleBracket]"],
+     "rightDoubleBracket" -> ToString[FullForm @ "\[RightDoubleBracket]"]
+    }
+  ] // Echo;
   
-  (* check if user KeyEventTranslations.tr exists  *)
+  (* check if user KeyEventTranslations.tr exists *)
   (* if it does, check if it is the same as the newly spliced string *)
   (* if it does not exist or match, export the new string *)
   If[
     Nand[
       FileExistsQ @ keyEventsFile,
-      StringMatchQ[keyEventString, Import[keyEventsFile, "Text"]]
+      SameQ[keyEventString, Import[keyEventsFile, "Text"]]
     ],
     Export[keyEventsFile, keyEventString, "Text"]
   ];
   
   (* reload text resources if session is using a front end *)
+  (* this may not be very effective *)
   If[
     $FrontEnd =!= Null,
     FrontEndExecute @ FrontEnd`FlushTextResourceCaches[]
