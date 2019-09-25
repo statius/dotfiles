@@ -62,7 +62,7 @@ Module[
      "leftDoubleBracket" -> ToString[FullForm @ "\[LeftDoubleBracket]"],
      "rightDoubleBracket" -> ToString[FullForm @ "\[RightDoubleBracket]"]
     }
-  ] // Echo;
+  ];
   
   (* check if user KeyEventTranslations.tr exists *)
   (* if it does, check if it is the same as the newly spliced string *)
