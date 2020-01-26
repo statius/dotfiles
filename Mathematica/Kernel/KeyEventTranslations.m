@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-(* installation script for extra Mathematica front end keyboard shortcuts *)
+(* Installation script for extra Mathematica front end keyboard shortcuts. *)
 
 Module[
   {
@@ -8,21 +8,21 @@ Module[
    keyEventString
   },
   
-  (* find system KeyEventTranslations.tr file *)
+  (* Find system `KeyEventTranslations.tr` file. *)
   keyEventsFile = FrontEndExecute[
     FrontEnd`FindFileOnPath["KeyEventTranslations.tr", "PrivatePathsTextResources"]
   ];
   
-  (* import system KeyEventTranslations resource string *)
+  (* Import system `KeyEventTranslations` resource string. *)
   keyEventString = Import[keyEventsFile, "Text"];
   
-  (* change path into $UserBaseDirectory *)
+  (* Change path into `$UserBaseDirectory`. *)
   keyEventsFile = StringReplace[
     keyEventsFile,
     $InstallationDirectory -> $UserBaseDirectory
   ];
   
-  (* create necessary directory structure *)
+  (* Create necessary directory structure. *)
   If[
     ! DirectoryQ[DirectoryName @ keyEventsFile],
     CreateDirectory[
@@ -31,7 +31,7 @@ Module[
     ]
   ];
     
-  (* splice double braket notation in to system KeyEventTranslation string *)
+  (* Splice double braket notation in to system `KeyEventTranslation` string. *)
   keyEventString = StringReplace[
     keyEventString,
     "EventTranslations[{
@@ -64,9 +64,9 @@ Module[
     }
   ];
   
-  (* check if user KeyEventTranslations.tr exists *)
-  (* if it does, check if it is the same as the newly spliced string *)
-  (* if it does not exist or match, export the new string *)
+  (* Check if user `KeyEventTranslations.tr` exists. *)
+  (* - if it does, check if it is the same as the newly spliced string *)
+  (* - if it does not exist or match, export the new string *)
   If[
     Nand[
       FileExistsQ @ keyEventsFile,
@@ -75,8 +75,8 @@ Module[
     Export[keyEventsFile, keyEventString, "Text"]
   ];
   
-  (* reload text resources if session is using a front end *)
-  (* this may not be very effective *)
+  (* Reload text resources if session is using a front end. *)
+  (* note: this may not be very effective *)
   If[
     $FrontEnd =!= Null,
     FrontEndExecute @ FrontEnd`FlushTextResourceCaches[]

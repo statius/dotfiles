@@ -1,31 +1,38 @@
-# bash profile
-
-# load ~/.paths to extend `$PATH`
-# ~/.path is not committed
-[ -r ~/.path ] && [ -f ~/.path ] && source ~/.path
+# bash_profile
 
 
-# load bash dotfiles
-for file in ~/.bash/{prompt.bash,exports.bash,options.bash,completions.bash}; do
-
-  [ -r "$file" ] && [ -f "$file" ] && source "$file"
-
-done
-
-unset file
-
-# ~/.bash_local can be used for bash settings you don’t want to commit
-[ -r "$file" ] && [ -f "$file" ] && source ~/.bash_local
+# Load (private) paths.
+[[ -r ~/.path ]] && source ~/.path
 
 
-# load general shell dotfiles
-for file in ~/.shell/{exports.sh,aliases.sh,functions/*.sh,completions.sh,sources.sh}; do
+# Load Bash dotfiles.
+# - options.bash
+# - functions/*.bash
+# - prompt.bash
+# - completions.bash
+for file in ~/.bash/{options.bash,fuctions/*.bash,prompt.bash,completions.bash}; do
 
-  [ -r "$file" ] && [ -f "$file" ] && source "$file"
+  [[ -r "$file" ]] && source "$file"
 
 done
-
 unset file
 
-# ~/.shell_local can be used for general shell settings you don’t want to commit
-[ -r "$file" ] && [ -f "$file" ] && source ~/.shell_local
+# Load private Bash settings.
+[[ -r ~/.bash_local ]] && source ~/.bash_local
+
+
+# Load general shell dotfiles.
+# - exports.sh
+# - aliases.sh
+# - functions/*.sh
+# - completions.sh
+for file in ~/.shell/{exports.sh,aliases.sh,functions/*.sh,completions.sh}; do
+
+  [[ -r "$file" ]] && source "$file"
+
+done
+unset file
+
+# Load private shell settings.
+[[ -r ~/.shell_local ]] && source ~/.shell_local
+

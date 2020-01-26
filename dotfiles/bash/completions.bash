@@ -1,33 +1,29 @@
 #!/usr/bin/env bash
 
-# bash completions
+# Bash completions file.
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
+# Add Homebrew bash completions.
+# (see: https://docs.brew.sh/Shell-Completion)
+# (includes git completions: https://github.com/git/git/tree/master/contrib/completion)
+if [[ "$OSTYPE" == "darwin"* ]] && hash brew 2> /dev/null; then
 
-  # add Homebrew bash tab completion
-  # see https://docs.brew.sh/Shell-Completion
-  if type brew &>/dev/null; then
+  if [[ -r "$(brew --prefix)"/etc/profile.d/bash_completion.sh ]]; then
 
-    if [[ -r "$(brew --prefix)"/etc/profile.d/bash_completion.sh ]]; then
+    source "$(brew --prefix)"/etc/profile.d/bash_completion.sh
 
-      source "$(brew --prefix)"/etc/profile.d/bash_completion.sh
+  else
 
-    else
-
-      for COMPLETION in "$(brew --prefix)"/etc/bash_completion.d/*; do
-
-        [[ -r "$COMPLETION" ]] && source "$COMPLETION"
-
-      done
-
-      unset COMPLETION
-
-    fi
+    for completion in "$(brew --prefix)"/etc/bash_completion.d/*; do
+      [[ -r "$completion" ]] && source "$completion"
+    done
+    unset completion
 
   fi
 
-# add other bash completions if present
-elif [ -f /etc/bash_completion ]; then
+fi
+
+# Add other bash completions if present.
+if [[ -r /etc/bash_completion ]]; then
 
   source /etc/bash_completion
 

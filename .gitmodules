@@ -1,3 +1,9 @@
 [submodule "Mathematica/Applications/CustomTicks"]
 	path = Mathematica/Applications/CustomTicks
 	url = https://github.com/mark-caprio/CustomTicks.git
+[submodule "dotfile/zsh/zsh-syntax-highlighting"]
+	path = dotfiles/zsh/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "dotfiles/local/share/nano/nano-syntax-improved"]
+	path = dotfiles/local/share/nano/nano-syntax-improved
+	url = https://github.com/scopatz/nanorc

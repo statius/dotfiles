@@ -1,20 +1,23 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-# shell completions
+# Shell completions file.
 
-# add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
+
+# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards.
 if [ -e "$HOME/.ssh/config" ]; then
 
-  complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh
+  complete -o "default" \
+           -o "nospace" \
+           -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh
 
 fi
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [ $(uname) = "Darwin" ]; then
 
-  # tab completion for `defaults read|write NSGlobalDomain`
+  # Add tab completion for `defaults read|write NSGlobalDomain`.
   complete -W "NSGlobalDomain" defaults
 
-  # add `killall` tab completion for common apps
+  # Add `killall` tab completion for common apps.
   complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal" killall
 
 fi

@@ -1,0 +1,5 @@
+# condarc
+
+# Disable conda's changes to `$PS1`.
+# (we manually insert the environment name when it's available)
+changeps1: false
