@@ -203,8 +203,8 @@ prompt_git() {
     local git_unstaged="${BASH_REMATCH[3]}"
     local git_uncommitted="${BASH_REMATCH[4]}"
     local git_untracked="${BASH_REMATCH[6]}"
-    local git_upstream_behind="${BASH_REMATCH[7]}"
-    local git_upstream_ahead="${BASH_REMATCH[8]}"
+    local git_upstream_ahead="${BASH_REMATCH[7]}"
+    local git_upstream_behind="${BASH_REMATCH[8]}"
 
     # Construct repo status string.
     # (include untracked files with unstaged files)
