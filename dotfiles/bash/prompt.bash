@@ -219,7 +219,9 @@ prompt_git() {
     local git_upstream="${git_upstream_ahead//</⇣}${git_upstream_behind//>/⇡}"
 
     # Convert `$git_action` to lowercase
-    git_action="${git_action,,}"
+    # (Use POSIX standard, since macOS Bash is still version 3.)
+    # (see: https://stackoverflow.com/questions/2264428)
+    git_action=$( echo "${git_action}" | tr '[:upper:]' '[:lower:]' )
 
     # Construct git prompt.
 
