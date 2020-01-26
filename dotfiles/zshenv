@@ -1,0 +1,8 @@
+# zshenv
+
+
+# Load (private) paths
+[ -r ~/.path ] && source ~/.path
+
+# Load general exports
+[ -r ~/.shell/exports.sh ] && source ~/.shell/exports.sh

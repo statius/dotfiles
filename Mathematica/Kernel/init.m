@@ -1,9 +1,8 @@
 (* ::Package:: *)
 
-(* user Mathematica Kernel initialization file *)
+(* User Mathematica Kernel initialization file. *)
 
-(* import Wolfram Language $Path from `path.m` *)
-(* path.m is not committed *)
+(* Import Wolfram Language $Path from `path.m`. *)
 With[
   {pathFile = FileNameJoin @ {DirectoryName @ $InputFileName, "path.m"}},
 
@@ -11,7 +10,7 @@ With[
 
 ];
 
-(* set Environment["PATH"] to $PATH sourced from ~.bash_profile *)
+(* Set `Environment["PATH"]` to `$PATH` sourced from `~.bash_profile`. *)
 If[
   $VersionNumber >= 10,
   SetEnvironment["PATH" -> StringTrim @ RunProcess[{"bash", "-cl", "echo $PATH"}, "StandardOutput"]]
@@ -31,62 +30,10 @@ If[
 ]
 
 
-(* add new key events *)
+(* Add new key events. *)
 With[
   {keyFile = FileNameJoin @ {DirectoryName @ $InputFileName, "KeyEventTranslations.m"}},
 
   If[And[FileExistsQ @ keyFile, $FrontEnd =!= Null], Get @ keyFile]
 
 ];
-
-(* see Mathematica Stack Exchange question https://mathematica.stackexchange.com/questions/6224 *)
-(*
-Needs @ "CustomKeyEvents`"
-
-AddKeyEvent[
-  "[", 
-  FrontEndExecute[
-    {
-     FrontEnd`NotebookWrite[
-       FrontEnd`InputNotebook[],
-       "\[LeftDoubleBracket]", 
-       After
-     ]
-    }
-  ] 
-  "Modifiers" -> {"Control"}
-];
-
-AddKeyEvent[
-  "]", 
-  FrontEndExecute[
-    {
-     FrontEnd`NotebookWrite[
-       FrontEnd`InputNotebook[],
-       "\[RightDoubleBracket]", 
-       Before
-     ]
-    }
-  ] 
-  "Modifiers" -> {"Control"}
-];
-
-AddKeyEvent[
-  "[", 
-  FrontEndExecute[
-    {
-     FrontEnd`NotebookWrite[
-       FrontEnd`InputNotebook[],
-       "\[LeftDoubleBracket]", 
-       After
-     ],
-     FrontEnd`NotebookWrite[
-       FrontEnd`InputNotebook[],
-       "\[RightDoubleBracket]", 
-       Before
-     ]
-    }
-  ] 
-  "Modifiers" -> {"Control", Switch[$OperatingSystem, "MacOSX", "Command", _, "Alt"]}
-];
-*)

@@ -1,6 +1,6 @@
 # dotfiles
 
-Proper hacker defaults for modern macOS and (GNU)Linux
+Proper hacker config for modern macOS and (GNU)Linux
 
 **Code:** [github.com/statius/dotfiles](https://github.com/statius/dotfiles)
 
@@ -8,21 +8,23 @@ Proper hacker defaults for modern macOS and (GNU)Linux
 
 ### Git and the installation script
 
-You can clone the repository wherever you want. The Wolfram Language package `CustomTicks` is included as a submodule, so it must be initialized (hence, `--recurse-submodules`):
+To clone the repository, run
 
 ```shell
-git clone https://github.com/statius/dotfiles.git --recurse-submodules
+git clone https://github.com/statius/dotfiles.git
 ```
 
-The install script will link the files into the appropriate locations (including a symlink to the dotfiles directory as `~/dotfiles`).
+The install script will update all Git submodules and link the files into the appropriate locations (including a symlink to the dotfiles directory as `~/dotfiles`).
 
-```bash
-cd dotfiles && ./install.sh
+```shell
+cd dotfiles && ./install
 ```
 
 The installation script can be run with `--force` (`-f`) to silently overwrite all existing files or with  `--interactive` (`-i`) to ask for comfirmation in each case.
 
 ### Specify local settings
+
+I maintain the files below in a separate private repository.
 
 #### `$PATH`
 
@@ -31,14 +33,16 @@ If `~/.path` exists, it will be sourced first, before any other files.
 Here’s an example `~/.path` file that adds `/usr/local/bin` to the `$PATH`:
 
 ```shell
+#!/usr/bin/env sh
+
 export PATH="/usr/local/bin:$PATH"
 ```
 
 #### Git credentials
 
-Since this is a public repository, I have avoided including my personal Git credentials. If `~/.gitconfig-local` exists, it will be included when `~/.gitconfig` is read. 
+Since this is a public repository, I have avoided including my personal Git credentials. If `~/.config/git/config-local` exists, it will be included when `~/.config/git/config` is read. 
 
-My `~/.gitconfig-local` looks something like this:
+My `config-local` file looks something like this:
 
 ```properties
 [user]
@@ -53,11 +57,17 @@ If `<$UserBaseDirectory>/Kernel/path.m` exists, it is read during the the Wolfra
 
 #### Local shell settings
 
-If the files `~/.shell_local` (general shell) and `~/.bash_local` (bash-specific) exist they will be sourced along with the other files. You can use these to add a few custom commands without the need to fork this entire repository, or to add commands you don’t want to commit to a public repository.
+If the files `~/.shell_local` (general shell), `~/.bash_local` (Bash-specific), or `~/.zsh_local` (Zsh-specific) exist they will be sourced along with the other files. You can use these to add machine-specific commands or those you don’t want to commit to a public repository.
 
 ## Uninstallation
 
-All symlinks can be removed by running the main `uninstall.sh` script, which can called with `--force` (`-f`) to silently unlink or with  `--interactive` (`-i`) to ask for confirmation in each case.
+All symlinks can be removed by running the main `uninstall` script, which can called with `--force` (`-f`) to silently unlink or with  `--interactive` (`-i`) to ask for confirmation in each case.
+
+## TODO
+
+- Fix the installation script for macOS Terminal colors.
+
+- Add a customized Zsh prompt.
 
 ## Project Information
 
@@ -68,5 +78,3 @@ This project is released under the MIT license.
 ### Contributions
 
 These dotfiles are maintained by Andrew Miller (and primarily created for my own needs). Feedback is always welcomed.
-
-Thanks to [Mathias Bynens](https://mathiasbynens.be/) and his [dotfiles repository](https://github.com/mathiasbynens/dotfiles).

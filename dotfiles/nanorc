@@ -1,0 +1,41 @@
+# GNU nano initialization file
+# ---------------------------
+# nano must be configured with --enable-nanorc for this to be read
+
+
+# OPTIONS
+
+# Autoindentation
+set autoindent
+
+# Use bold text instead of reverse video text.
+set boldtext
+
+# Display line numbers to the left of the text.
+set linenumbers
+
+# Enable mouse support, if available.
+set mouse
+
+# Don't wrap text at all.
+set nowrap
+
+# Silently ignore problems with unknown directives in the nanorc file.
+# set quiet
+
+# Smooth scrolling
+set smooth
+
+# Use this tab size instead of the default (must be greater than 0).
+set tabsize 4
+
+# Convert typed tabs to spaces.
+set tabstospaces
+
+
+# SYNTAX HIGHLIGHTING
+# (see: https://askubuntu.com/questions/90013)
+
+# Improved syntax highlighting.
+# (see: https://github.com/scopatz/nanorc)
+# include "$XDG_DATA_HOME/nano/nano-syntax-improved/*.nanorc"

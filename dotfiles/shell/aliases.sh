@@ -1,60 +1,82 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-# easier navigation: .., ..., ...., ....., ~ and -
+# Shell aliases file.
+
+
+# Easier navigation: .., ..., ...., ....., and ~
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ~="cd ~" # `cd` is probably faster to type though
-alias -- -="cd -"
 
 
-# detect which `ls` flavor is in use
+# Detect which `ls` flavor is in use.
 if ls --color > /dev/null 2>&1; then 
 
   # GNU `ls`
-  colorflag="--color"
-  export LS_COLORS='no=00:fi=00:di=01;34:ow=34:tw=34:ln=01;36:mi=35:or=36:hl=01;35:pi=01;33:so=01;31:bd=33:cd=33:ex=01;32:su=32:sg=32'
+  ls_colorflag="--color"
+  export LS_COLORS='di=01;34:'` # directory
+                  `'ln=01;36:'` # symbolic link
+                  `'or=37:'`    # symbolic link pointing to a non-existent file (orphan)
+                  `'mi=35:'`    # nonexistent file pointed to by a symbolic link 
+                  `'so=01;31:'` # socket
+                  `'pi=01;33:'` # pipe
+                  `'ex=01;32:'` # executable
+                  `'bd=33:'`    # block special file
+                  `'cd=33:'`    # chararacter special file
+                  `'su=01;92:'` # setuid executable
+                  `'sg=01;92:'` # setgid executable
+                  `'tw=01;95:'` # other-writable directory with sticky bit
+                  `'ow=01;95:'` # other-writable directory without sticky bit
+                  `'st=01;94:'` # directory with sticky bit
+                  `'fi=00:'`    # file
+                  `'no=00'      # normal (global default)
 
 else 
   
-  # macOS `ls`
-  colorflag="-G"
-  export LSCOLORS='ExGxBxDxCxdxdxcxcxexex'
+  # macOS (BSD) `ls`
+  ls_colorflag="-G"
+  export LSCOLORS='Ex'` # directory
+                 `'Gx'` # symbolic link
+                 `'Bx'` # socket
+                 `'Dx'` # pipe
+                 `'Cx'` # exectutable
+                 `'dx'` # block special file
+                 `'dx'` # chararcter special file
+                 `'cx'` # setuid executable
+                 `'cx'` # setgid executable
+                 `'ex'` # directory with sticky bit
+                 `'ex'  # directory without sticky bit
   
 fi
 
-# list all files colorized in long format
-alias ll="ls -l ${colorflag}"
+# List all files colorized in long format.
+alias ll="ls -l ${ls_colorflag}"
 
-# list all files colorized in long format, including dot files
-alias la="ls -la ${colorflag}"
+# List all files colorized in long format, including dotfiles.
+alias la="ls -la ${ls_colorflag}"
 
-# list only directories
-alias ldir="ls -l ${colorflag} | grep --color=never '^d'"
+# List only directories.
+alias ldir="ls -l ${ls_colorflag} | grep --color=never '^d'"
 
-# always use color output for `ls`
-alias ls="command ls ${colorflag}"
+# Always use color output for `ls`.
+alias ls="command ls ${ls_colorflag}"
 
-# always enable colored `grep` output
-# note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
+unset ls_colorflag
+
+
+# Always enable colored `grep` output.
+# (note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage)
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# use homebrew nano, if available
-# note: macOS nano can't find homebrew sytax coloring files
-if [[ "$OSTYPE" == "darwin"* ]] && [ -x /usr/local/bin/nano ]; then
-
-  alias nano="/usr/local/bin/nano"
-
-fi
-
-# enable aliases to be sudo-ed
+# Enable aliases to be sudo-ed.
 alias sudo='sudo '
 
-# reload the shell (i.e. invoke as a login shell)
+# Reload the shell (i.e. invoke as a login shell).
 alias reload="exec $SHELL -l"
 
-# print each PATH entry on a separate line
+# Print each `$PATH` entry on a separate line.
 alias path='echo -e ${PATH//:/\\n}'

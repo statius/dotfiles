@@ -1,0 +1,63 @@
+# zshrc
+
+
+# Set prompt.
+if [ -d  ~/.zsh/prompt ]; then
+
+  # Add prompt theme "wolfram" to `$fpath`
+  fpath+=~/.zsh/prompt/wolfram
+
+  # Autoload promptinit
+  autoload -U promptinit && promptinit
+
+  # Set prompt
+  prompt wolfram
+
+fi
+
+# Load Zsh dotfiles.
+# - options.zsh
+# - completions.zsh
+for file in ~/.zsh/{options.zsh,completions.zsh}; do
+
+  [ -r "$file" ] && source "$file"
+
+done
+unset file
+
+# Add ~/.zsh/functions to `$fpath`.
+[ -r ~/.zsh/functions ] && fpath+=~/.zsh/functions
+
+# Autoload functions.
+for file in ~/.zsh/functions/*; do
+
+  [ -r "$file" ] && autoload -Uz "$file"
+
+done
+unset file
+
+# Load private Zsh settings.
+[ -r ~/.zsh_local ] && source ~/.zsh_local
+
+# Load general shell dotfiles.
+# - aliases.sh
+# - functions/*.sh
+# - completions.sh
+for file in ~/.shell/{aliases.sh,functions/*.sh,completions.sh}; do
+
+  [ -r "$file" ] && source "$file"
+
+done
+unset file
+
+# Load private shell settings.
+[ -r ~/.shell_local ] && source ~/.shell_local
+
+# Zsh syntax highlighting.
+# (submodule cloned from https://github.com/zsh-users/zsh-syntax-highlighting.git)
+# (this must be sourced last)
+if [ -r ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+fi
