@@ -195,16 +195,17 @@ prompt_git() {
   # Constructs the git status from the output of the function `__git_ps1`.
 
   local git_ps1="$( __git_ps1 )"
-  local git_regex='^ \(([^ <>=]+)( )?(\*)?(\+)?(#)?(%)?(<)?(>)?(=)?\)$'
+  local git_regex='^ \(([^ <>=]+)( )?(\*)?(\+)?(#)?(%)?(\|[^<>=]+)?(<)?(>)?(=)?\)$'
 
   if [[ "${git_ps1}" =~ $git_regex ]]; then
 
     local git_branch="${BASH_REMATCH[1]}"
+    local git_action="${BASH_REMATCH[7]}"
     local git_unstaged="${BASH_REMATCH[3]}"
     local git_uncommitted="${BASH_REMATCH[4]}"
     local git_untracked="${BASH_REMATCH[6]}"
-    local git_upstream_ahead="${BASH_REMATCH[7]}"
-    local git_upstream_behind="${BASH_REMATCH[8]}"
+    local git_upstream_ahead="${BASH_REMATCH[8]}"
+    local git_upstream_behind="${BASH_REMATCH[9]}"
 
     # Construct repo status string.
     # (include untracked files with unstaged files)
@@ -217,15 +218,19 @@ prompt_git() {
     # Construct upstream information string and translate symbols.
     local git_upstream="${git_upstream_ahead//</⇣}${git_upstream_behind//>/⇡}"
 
+    # Convert `$git_action` to lowercase
+    git_action="${git_action,,}"
+
     # Construct git prompt.
 
     git_ps1="${color_white} on "
 
     # Color git status differently if repo is dirty.
     if [[ -z "${git_status}" ]]; then
-      git_ps1+="${color_bold_cyan}${git_branch}"
+      git_ps1+="${color_bold_cyan}${git_branch}${git_action}"
     else
-      git_ps1+="${color_bold_magenta}${git_branch}${color_bold_light_magenta}${git_status}"
+      git_ps1+="${color_bold_magenta}${git_branch}${git_action}"
+      git_ps1+="${color_bold_light_magenta}${git_status}"
     fi
 
     # Add upstream information.
