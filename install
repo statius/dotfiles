@@ -10,12 +10,12 @@
 # (see: https://stackoverflow.com/questions/10412162)
 base_dir=$(
 
-  base_dir=${0}
+  base_dir="${0}"
 
   while [ -L "${base_dir}" ]; do
 
     cd "${base_dir%/*}"
-    base_dir=$(readlink "${base_dir}")
+    base_dir=$( readlink "${base_dir}" )
 
   done
 
@@ -28,11 +28,11 @@ base_dir=$(
 # SETUP
 
 # Check for run conditions.
-if [ "$1" = "--force" -o "$1" = "-f" ]; then
+if [ "${1}" = "--force" -o "${1}" = "-f" ]; then
 
   [ -r "${base_dir}"/script/setup.sh ] && source "${base_dir}"/script/setup.sh -f
 
-elif [ "$1" = "--interactive" -o "$1" = "-i" ]; then
+elif [ "${1}" = "--interactive" -o "${1}" = "-i" ]; then
 
   [ -r "${base_dir}"/script/setup.sh ] && source "${base_dir}"/script/setup.sh -i
 
@@ -40,7 +40,7 @@ else
 
   read -r -p "This may overwrite existing files. Are you sure? (y/n) " -n 1
   echo ""
-  if [ $( expr $REPLY : '[yY]$' ) -eq 1  ]; then
+  if [ $( expr "${REPLY}" : '[yY]$' ) -eq 1  ]; then
     
     [ -r "${base_dir}"/script/setup.sh ] && source "${base_dir}"/script/setup.sh -f
     

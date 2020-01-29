@@ -42,10 +42,6 @@
         # (see: https://git-scm.com/docs/git-update-index#_untracked_cache)
         untrackedCache = true
 
-        # Use Visual Studio Code as Git editor.
-        # (set in `~/.config/git/config-local`)
-        # editor = "code --wait --new-window"
-
 [color]
 
         # Use colors in Git commands that are capable of colored output.
@@ -83,12 +79,6 @@
         renames = copies
 
         tool = default-difftool
-
-# [difftool "default-difftool"]
-
-        # Use Visual Studio Code for diff.
-        # (set in `~/.config/git/config-local`)
-        # cmd = "code --wait --new-window --diff $LOCAL $REMOTE"
 
 [diff "bin"]
 

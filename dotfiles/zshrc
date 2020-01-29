@@ -20,7 +20,7 @@ fi
 # - completions.zsh
 for file in ~/.zsh/{options.zsh,completions.zsh}; do
 
-  [ -r "$file" ] && source "$file"
+  [ -r "${file}" ] && source "${file}"
 
 done
 unset file
@@ -31,7 +31,7 @@ unset file
 # Autoload functions.
 for file in ~/.zsh/functions/*; do
 
-  [ -r "$file" ] && autoload -Uz "$file"
+  [ -r "${file}" ] && autoload -Uz "${file}"
 
 done
 unset file
@@ -45,7 +45,7 @@ unset file
 # - completions.sh
 for file in ~/.shell/{aliases.sh,functions/*.sh,completions.sh}; do
 
-  [ -r "$file" ] && source "$file"
+  [ -r "${file}" ] && source "${file}"
 
 done
 unset file

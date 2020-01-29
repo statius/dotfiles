@@ -62,7 +62,7 @@ prompt_set_title() {
   fi
 
   # Don't set title over serial console.
-  case $TTY in
+  case "${TTY}" in
     /dev/ttyS[0-9]*) 
       return 
       ;;
@@ -78,7 +78,7 @@ prompt_seconds_to_human_time() {
   # Turn seconds into human readable time.
   # (165392 => 1d 21h 56m 32s)
 
-  local human total_seconds=$1
+  local human total_seconds="${1}"
   local days=$(( total_seconds / 60 / 60 / 24 ))
   local hours=$(( total_seconds / 60 / 60 % 24 ))
   local minutes=$(( total_seconds / 60 % 60 ))
@@ -89,7 +89,7 @@ prompt_seconds_to_human_time() {
   (( minutes > 0 )) && human+="${minutes}m "
   human+="${seconds}s"
 
-  echo $human
+  echo "${human}"
 
 }
 
@@ -100,12 +100,12 @@ prompt_cmd_timer() {
   # (see: https://tylercipriani.com/blog/2016/01/19/Command-Timing-Bash-Prompt/)
 
   # Do nothing if completing.
-  [[ -n "$COMP_LINE" ]] && return
+  [[ -n "${COMP_LINE}" ]] && return
 
   # Don't cause a preexec for `$PROMPT_COMMAND`.
-  [[ "$BASH_COMMAND" == "$PROMPT_COMMAND" ]] && return
+  [[ "${BASH_COMMAND}" == "${PROMPT_COMMAND}" ]] && return
 
-  prompt_cmd_timestamp=${prompt_cmd_timestamp:-$SECONDS}
+  prompt_cmd_timestamp="${prompt_cmd_timestamp:-$SECONDS}"
 
 }
 
@@ -115,19 +115,19 @@ prompt_cmd_exec_time() {
   # Print execution time of previous command if it exceeds threshold:
   # 5 seconds or `$PROMPT_CMD_MAX_EXEC_TIME`, if set.
 
-  local exec_time="$(( $SECONDS - $prompt_cmd_timestamp ))"
+  local exec_time="$(( SECONDS - prompt_cmd_timestamp ))"
   
-  if (( $exec_time > ${PROMPT_CMD_MAX_EXEC_TIME:-5} )); then
+  if (( exec_time > ${PROMPT_CMD_MAX_EXEC_TIME:-5} )); then
 
     # local exec_time_string="\n"
     local exec_time_string="${color_white}> "
-    local exec_time_string+="${color_bold_light_red}$( prompt_seconds_to_human_time $exec_time )"
+    local exec_time_string+="${color_bold_light_red}$( prompt_seconds_to_human_time ${exec_time} )"
     local exec_time_string+="${color_white} <<<"
     exec_time_string+="\n"
 
   fi
 
-  echo "$exec_time_string"
+  echo "${exec_time_string}"
 
 }
 
@@ -155,7 +155,7 @@ prompt_ssh_q() {
   # - `$SSH_CONNECTION`
   # - `$SSH_CLIENT`
   # is set.
-  if [[ $SSH_TTY ]] || [[ $SSH_CONNECTION ]] || [[ $SSH_CLIENT ]]; then
+  if [[ "${SSH_TTY}" ]] || [[ "${SSH_CONNECTION}" ]] || [[ "${SSH_CLIENT}" ]]; then
     return 0
   fi
 
@@ -163,15 +163,15 @@ prompt_ssh_q() {
   # Recursively test for `sshd` daemon parent process.
   # (see: https://unix.stackexchange.com/questions/9605)
   
-  local p=${1:-$PPID}
+  local p="${1:-$PPID}"
   local pid name ppid
 
-  read pid name ppid < <( ps -o pid= -o comm= -o ppid= -p $p )
+  read pid name ppid < <( ps -o pid= -o comm= -o ppid= -p "${p}" )
 
-  [[ "$name" =~ sshd ]] && return 0
-  [[ "$ppid" -le 1 ]] && return 1
+  [[ "${name}" =~ sshd ]] && return 0
+  [[ "${ppid}" -le 1 ]] && return 1
 
-  prompt_ssh_q $ppid
+  prompt_ssh_q "${ppid}"
 
 }
 
@@ -194,10 +194,10 @@ prompt_git() {
   # Git status prompt function.
   # Constructs the git status from the output of the function `__git_ps1`.
 
-  local git_ps1="$( __git_ps1 )"
+  local git_ps1=$( __git_ps1 )
   local git_regex='^ \(([^ <>=]+)( )?(\*)?(\+)?(#)?(%)?(\|[^<>=]+)?(<)?(>)?(=)?\)$'
 
-  if [[ "${git_ps1}" =~ $git_regex ]]; then
+  if [[ "${git_ps1}" =~ ${git_regex} ]]; then
 
     local git_branch="${BASH_REMATCH[1]}"
     local git_action="${BASH_REMATCH[7]}"
@@ -240,7 +240,7 @@ prompt_git() {
 
   fi
 
-  echo "$git_ps1"
+  echo "${git_ps1}"
 
 }
 
@@ -250,7 +250,7 @@ prompt_venv() {
   # Format string specifying Python virtual environment.
   # (see: https://stackoverflow.com/questions/42481726)
 
-  [[ -n $CONDA_PROMPT_MODIFIER ]] && echo "${color_white}(${CONDA_PROMPT_MODIFIER}) "
+  [[ -n "${CONDA_PROMPT_MODIFIER}" ]] && echo "${color_white}${CONDA_PROMPT_MODIFIER} "
 
 }
 
@@ -259,7 +259,7 @@ prompt_symbol_style() {
 
   # Highlight the prompt symbol if argument is nonzero.
 
-  if [[ "$1" -eq 0 ]]; then
+  if [[ "${1}" -eq 0 ]]; then
     echo "${color_bold_black}"
   else 
     echo "${color_bold_red}"
@@ -292,17 +292,17 @@ prompt_command() {
   PS1="\[\e]0;\]$( prompt_set_title )\a"
 
   # Set prompt.
-  PS1+="$( prompt_cmd_exec_time )"
+  PS1+=$( prompt_cmd_exec_time )
   PS1+="\n"
   PS1+="$( prompt_user_style )\u"
   PS1+="${color_white} @ "
   PS1+="$( prompt_host_style )\h"
   PS1+="${color_white} in "
   PS1+="${color_bold_green}\w"
-  PS1+="$( prompt_git )"
+  PS1+=$( prompt_git )
   PS1+="\n"
-  PS1+="$( prompt_venv )"
-  PS1+="$( prompt_symbol_style $exit_code )$( prompt_symbol ) ${color_reset}"
+  PS1+=$( prompt_venv )
+  PS1+="$( prompt_symbol_style ${exit_code} )$( prompt_symbol ) ${color_reset}"
 
   # Reset command timestamp.
   unset prompt_cmd_timestamp
@@ -323,7 +323,7 @@ prompt_setup() {
   GIT_PS1_SHOWDIRTYSTATE=1
   # GIT_PS1_SHOWSTASHSTATE=1
   GIT_PS1_SHOWUNTRACKEDFILES=1
-  GIT_PS1_SHOWUPSTREAM="auto"
+  GIT_PS1_SHOWUPSTREAM='auto'
 
   # Set `$PROMPT_COMMAND`.
   PROMPT_COMMAND=prompt_command

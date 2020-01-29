@@ -20,4 +20,4 @@ fi
 [ -r "${base_dir}"/script/clean-mathematica.sh ] && source "${base_dir}"/script/clean-mathematica.sh
 
 # Repository directory
-[ -L ~/dotfiles-local ] && rm -v "$1" ~/dotfiles-local
+[ -L ~/dotfiles-local ] && rm -v "${1}" ~/dotfiles-local

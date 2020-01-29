@@ -4,15 +4,15 @@
 
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards.
-if [ -e "$HOME/.ssh/config" ]; then
+if [ -e "$HOME"/.ssh/config ]; then
 
   complete -o "default" \
            -o "nospace" \
-           -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh
+           -W "$( grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n' )" scp sftp ssh
 
 fi
 
-if [ $(uname) = "Darwin" ]; then
+if [ $( uname ) = "Darwin" ]; then
 
   # Add tab completion for `defaults read|write NSGlobalDomain`.
   complete -W "NSGlobalDomain" defaults

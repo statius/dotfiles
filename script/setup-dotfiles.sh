@@ -18,7 +18,7 @@
 # - zshenv
 for file in "${base_dir}"/dotfiles/{bash_profile,bashrc,condarc,inputrc,nanorc,zshrc,zshenv}; do
 
-  [ -r "$file" ] && ln -snv "$1" "$file" ~/."$( basename $file )"
+  [ -r "${file}" ] && ln -snv "${1}" "${file}" ~/."$( basename ${file} )"
 
 done
 unset file
@@ -28,7 +28,7 @@ unset file
 # - zsh
 for dir in "${base_dir}"/dotfiles/{bash,shell,zsh}; do
 
-  [ -r "$dir" ] && ln -snv "$1" "$dir" ~/."$( basename $dir )"
+  [ -r "${dir}" ] && ln -snv "${1}" "${dir}" ~/."$( basename ${dir} )"
 
 done
 unset dir
@@ -37,7 +37,7 @@ unset dir
 if [ -r "${base_dir}"/dotfiles/config/git/config ]; then
   
   [ ! -d ~/.config/git ] && mkdir -pv ~/.config/git
-  ln -snv "$1" "${base_dir}"/dotfiles/config/git/config ~/.config/git/config
+  ln -snv "${1}" "${base_dir}"/dotfiles/config/git/config ~/.config/git/config
 
 fi
 
@@ -45,7 +45,7 @@ fi
 if [ -r "${base_dir}"/dotfiles/config/git/ignore ]; then
   
   [ ! -d ~/.config/git ] && mkdir -pv ~/.config/git
-  ln -snv "$1" "${base_dir}"/dotfiles/config/git/ignore ~/.config/git/ignore
+  ln -snv "${1}" "${base_dir}"/dotfiles/config/git/ignore ~/.config/git/ignore
 
 fi
 
@@ -53,6 +53,6 @@ fi
 if [ -d "${base_dir}"/dotfiles/local/share/nano/nano-syntax-improved ]; then
   
   [ ! -d ~/.local/share/nano ] && mkdir -pv ~/.local/share/nano
-  ln -snv "$1" "${base_dir}"/dotfiles/local/share/nano/nano-syntax-improved ~/.local/share/nano/nano-syntax-improved
+  ln -snv "${1}" "${base_dir}"/dotfiles/local/share/nano/nano-syntax-improved ~/.local/share/nano/nano-syntax-improved
 
 fi

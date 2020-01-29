@@ -25,7 +25,7 @@ defaults write com.apple.Safari.plist WebKitUserStyleSheetLocationPreferenceKey 
 # (see: https://unix.stackexchange.com/questions/81349)
 find "${base_dir}"/macos/Services \
   -name '*.workflow' \
-  -exec sh -c 'rm -v "$1" ~/Library/Services/$( basename "$2" )' _ "$1" '{}' \;
+  -exec sh -c 'rm -v "${1}" ~/Library/Services/$( basename "${2}" )' _ "${1}" '{}' \;
 
 
 # UNINSTALL
