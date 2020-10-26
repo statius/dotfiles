@@ -1,1 +1,0 @@
-dotfiles/bash/git-prompt.sh

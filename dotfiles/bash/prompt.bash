@@ -49,7 +49,7 @@ color_bold_light_gray="${color_bold}\[$( tput setaf 15 )\]"
 
 # Load `__git_ps1` function.
 # (see: https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh)
-[[ -r ~/.bash/git-prompt.bash ]] && source ~/.bash/git-prompt.bash
+[[ -r ~/.bash/git-prompt.sh ]] && source ~/.bash/git-prompt.sh
 
 
 prompt_set_title() {
