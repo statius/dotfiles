@@ -22,7 +22,7 @@ fi
 
 for file in "${base_dir}"/Mathematica/Applications/*; do
 
-  [ -r "$file" ] && ln -snv "$1" "$file" "$math_user_base_dir"/Applications/"$( basename $file )"
+  [ -r "${file}" ] && ln -snv "${1}" "${file}" "$math_user_base_dir"/Applications/"$( basename ${file} )"
   
 done
 unset file
@@ -31,7 +31,7 @@ unset file
 if [ $( uname ) = "Darwin" ] && [ -x "${base_dir}"/Mathematica/bin/math ]; then
   
   [ ! -d ~/bin ] && mkdir -pv ~/bin
-  ln -snv "$1" "${base_dir}/"Mathematica/bin/math ~/bin/math
+  ln -snv "${1}" "${base_dir}/"Mathematica/bin/math ~/bin/math
 
 fi
 
@@ -42,7 +42,7 @@ if [ -r "${base_dir}"/Mathematica/FrontEnd/FileHeaders.tr ]; then
     mkdir -vp "$math_user_base_dir"/SystemFiles/FrontEnd/TextResources
   fi
 
-  ln -snv "$1" \
+  ln -snv "${1}" \
     "${base_dir}"/Mathematica/FrontEnd/FileHeaders.tr \
     "$math_user_base_dir"/SystemFiles/FrontEnd/TextResources/FileHeaders.tr
 
@@ -53,7 +53,7 @@ fi
 
 for file in "${base_dir}"/Mathematica/Kernel/{init,KeyEventTranslations}.m; do
 
-  [ -r "$file" ] && ln -snv "$1" "$file" "$math_user_base_dir"/Kernel/"$( basename $file )"
+  [ -r "${file}" ] && ln -snv "${1}" "${file}" "$math_user_base_dir"/Kernel/"$( basename ${file} )"
 
 done
 unset file

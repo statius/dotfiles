@@ -13,7 +13,7 @@ empty_dir_q() {
 
   local files
 
-  [ -d "$1" ] && files=$( ls -qAL -- "$1" ) && [ -z "$files" ]
+  [ -d "${1}" ] && files=$( ls -qAL -- "${1}" ) && [ -z "${files}" ]
 
 }
 
@@ -32,7 +32,7 @@ fi
 # - Applications
 for file in "${base_dir}"/Mathematica/Applications/*; do
 
-  [ -L "$file" ] && rm -v "$1" "$file"
+  [ -L "${file}" ] && rm -v "${1}" "${file}"
   
 done
 unset file
@@ -60,7 +60,7 @@ fi
 
 for file in "$math_user_base_dir"/Kernel/{init,KeyEventTranslations}.m; do
 
-  [ -L "$file" ] && rm -v "$1" "$file"
+  [ -L "${file}" ] && rm -v "${1}" "${file}"
 
 done
 unset file

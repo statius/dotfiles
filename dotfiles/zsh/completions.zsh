@@ -2,16 +2,12 @@
 
 # Zsh completions file.
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "${OSTYPE}" == "darwin"* ]] && type brew &> /dev/null; then
 
   # Add Homebrew Zsh completions
-  # (see https://docs.brew.sh/Shell-Completion)
-  # (includes git completions: https://github.com/git/git/tree/master/contrib/completion)
-  if type brew &>/dev/null; then
-
-    FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
-
-  fi
+  # (see: https://docs.brew.sh/Shell-Completion)
+  # (includes Git completions: https://github.com/git/git/tree/master/contrib/completion)
+  FPATH="$( brew --prefix )/share/zsh/site-functions:${FPATH}"
 
 fi
 

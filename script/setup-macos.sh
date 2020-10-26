@@ -26,11 +26,11 @@ defaults write com.apple.Safari.plist WebKitUserStyleSheetLocationPreferenceKey 
 # (see: https://unix.stackexchange.com/questions/81349)
 find "${base_dir}"/macos/Services \
   -name '*.workflow' \
-  -exec sh -c 'ln -snv "$1" "$2" ~/Library/Services' _ "$1" '{}' \;
+  -exec sh -c 'ln -snv "${1}" "${2}" ~/Library/Services' _ "${1}" '{}' \;
 
 # old_ifs="$IFS"
 # while IFS= read -r -d $'\0' file; do 
-#   ln -s "$file" ~/Library/Services/
+#   ln -s "${file}" ~/Library/Services/
 # done < <( find "${base_dir}"/macos/Services -name '*.workflow' -print0 )
 # unset file
 # IFS="$old_ifs"

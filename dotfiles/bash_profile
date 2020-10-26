@@ -12,7 +12,7 @@
 # - completions.bash
 for file in ~/.bash/{options.bash,fuctions/*.bash,prompt.bash,completions.bash}; do
 
-  [[ -r "$file" ]] && source "$file"
+  [[ -r "${file}" ]] && source "${file}"
 
 done
 unset file
@@ -28,7 +28,7 @@ unset file
 # - completions.sh
 for file in ~/.shell/{exports.sh,aliases.sh,functions/*.sh,completions.sh}; do
 
-  [[ -r "$file" ]] && source "$file"
+  [[ -r "${file}" ]] && source "${file}"
 
 done
 unset file

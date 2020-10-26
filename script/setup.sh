@@ -25,4 +25,4 @@ fi
 [ -r "${base_dir}"/script/setup-mathematica.sh ] && source "${base_dir}"/script/setup-mathematica.sh
 
 # Repository directory
-ln -snv "$1" "${base_dir}" ~/"$( basename ${base_dir} )"
+ln -snv "${1}" "${base_dir}" ~/"$( basename ${base_dir} )"
